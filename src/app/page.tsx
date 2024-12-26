@@ -4,10 +4,12 @@ import { channelResponseSchema, type ChannelResponse } from "@/schemas/channel";
 import { env } from "@/utils/env";
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 
+export const dynamic = "force-dynamic";
+
 // Separate async function to fetch content
 async function getChannels(): Promise<ChannelResponse> {
   const res = await fetch(`${env.BACKEND_URL}/channels`, {
-    cache: "force-cache",
+    cache: "no-store",
   });
 
   if (!res.ok) {

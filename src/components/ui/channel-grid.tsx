@@ -2,6 +2,7 @@ import type { Channel } from "@/schemas/channel";
 import {
   Badge,
   Box,
+  Heading,
   HStack,
   IconButton,
   Image,
@@ -12,33 +13,58 @@ import { PlayIcon } from "lucide-react";
 import NextImage from "next/image";
 import Link from "next/link";
 
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+} from "@/components/ui/accordion";
+
 interface RootProps {
   children: React.ReactNode;
+  value: string;
+  title: string;
 }
 
 interface ListProps {
   channels: Channel[];
+  columns: 4 | 5 | 6;
 }
 
 interface ItemProps {
   channel: Channel;
 }
 
-const Root = ({ children }: RootProps) => {
+const Root = ({ children, value, title }: RootProps) => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={8}>
-      {children}
-    </SimpleGrid>
+    <AccordionRoot collapsible defaultValue={[value]}>
+      <AccordionItem value={value} borderBottom="none">
+        <AccordionItemTrigger cursor="pointer" indicatorPlacement="end">
+          <Heading
+            as="h3"
+            size="md"
+            fontWeight="bold"
+            fontSize="2xl"
+            color="fg.muted"
+          >
+            {title}
+          </Heading>
+        </AccordionItemTrigger>
+        <AccordionItemContent w="full">
+          <VStack gap={8}>{children}</VStack>
+        </AccordionItemContent>
+      </AccordionItem>
+    </AccordionRoot>
   );
 };
 
-const List = ({ channels }: ListProps) => {
+const List = ({ channels, columns }: ListProps) => {
   return (
-    <>
+    <SimpleGrid columns={{ base: 1, md: 2, lg: columns }} gap={8}>
       {channels.map((channel, index) => (
         <ChannelGrid.Item key={index} channel={channel} />
       ))}
-    </>
+    </SimpleGrid>
   );
 };
 

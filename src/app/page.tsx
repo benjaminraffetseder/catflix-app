@@ -2,7 +2,7 @@ import { ChannelGrid } from "@/components/ui/channel-grid";
 import { Hero } from "@/components/ui/hero";
 import { channelResponseSchema, type ChannelResponse } from "@/schemas/channel";
 import { env } from "@/utils/env";
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // Revalidate every minute
@@ -59,11 +59,9 @@ export default async function Home() {
         <Hero.Actions />
       </Hero>
       <Container maxW="container.xl" py={16}>
-        <Heading as="h2" size="xl" mb={8}>
-          Channels
-        </Heading>
-        <ChannelGrid.Root>
-          <ChannelGrid.List channels={channels.data} />
+        <ChannelGrid.Root value="channels" title="Channels">
+          <ChannelGrid.List channels={channels.data.slice(0, 4)} columns={4} />
+          <ChannelGrid.List channels={channels.data.slice(4)} columns={5} />
         </ChannelGrid.Root>
       </Container>
     </Box>

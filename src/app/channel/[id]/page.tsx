@@ -22,12 +22,6 @@ import { YoutubeIcon } from "lucide-react";
 import NextImage from "next/image";
 import { default as Link, default as NextLink } from "next/link";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
 async function getChannel(id: string): Promise<Channel> {
   const res = await fetch(`${env.BACKEND_URL}/channels/${id}`, {
     next: {
@@ -62,10 +56,14 @@ async function getVideos(id: string): Promise<VideoResponse> {
   return videoResponseSchema.parse(data);
 }
 
-export default async function ChannelDetail({ params }: PageProps) {
-  const resolvedParams = await Promise.resolve(params);
-  const channel = await getChannel(resolvedParams.id);
-  const videos = await getVideos(resolvedParams.id);
+export default async function ChannelDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+  const channel = await getChannel(id);
+  const videos = await getVideos(id);
 
   return (
     <Box>
@@ -77,7 +75,14 @@ export default async function ChannelDetail({ params }: PageProps) {
       >
         <Container maxW="container.xl" py={4}>
           <HStack gap={4}>
-            <Image asChild rounded="lg" overflow="hidden" w="64px" h="64px">
+            <Image
+              asChild
+              rounded="lg"
+              overflow="hidden"
+              w="64px"
+              h="64px"
+              alt={channel.name}
+            >
               <NextImage
                 src={channel.thumbnailUrl}
                 alt={channel.name}
@@ -134,7 +139,7 @@ export default async function ChannelDetail({ params }: PageProps) {
                       bg="bg.surface"
                     >
                       <Box position="relative">
-                        <Image asChild>
+                        <Image asChild alt={video.title}>
                           <NextImage
                             src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
                             alt={video.title}

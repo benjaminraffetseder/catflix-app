@@ -18,10 +18,10 @@ async function getVideo(id: string) {
 export default async function VideoPage({
   params,
 }: {
-  params: { videoId: string };
+  params: Promise<{ videoId: string }>;
 }) {
-  const resolvedParams = await Promise.resolve(params);
-  const video = await getVideo(resolvedParams.videoId);
+  const videoId = (await params).videoId;
+  const video = await getVideo(videoId);
 
   if (!video) {
     notFound();

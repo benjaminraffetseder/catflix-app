@@ -6,7 +6,7 @@ export default function Error() {
     <Container maxW="container.xl" py={8}>
       <VStack gap={4} align="center">
         <Heading>Something went wrong</Heading>
-        <Text>We couldn't load the video. Please try again later.</Text>
+        <Text>We couldn&apos;t load the video. Please try again later.</Text>
         <Button onClick={() => window.location.reload()}>Try Again</Button>
       </VStack>
     </Container>

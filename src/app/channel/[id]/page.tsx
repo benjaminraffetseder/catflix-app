@@ -23,37 +23,45 @@ import NextImage from "next/image";
 import { default as Link, default as NextLink } from "next/link";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every minute
 
 async function getChannel(id: string): Promise<Channel> {
-  const res = await fetch(`${env.BACKEND_URL}/channels/${id}`, {
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(`${env.BACKEND_URL}/channels/${id}`, {
+      next: { revalidate: 60 },
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch channel");
+    if (!res.ok) {
+      throw new Error(`Failed to fetch channel: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return channelSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching channel:", error);
+    throw new Error("Failed to fetch channel. Please try again later.");
   }
-
-  const data = await res.json();
-
-  return channelSchema.parse(data);
 }
 
 async function getVideos(id: string): Promise<VideoResponse> {
-  const res = await fetch(
-    `${env.BACKEND_URL}/videos?channelId=${id}&limit=50&sortOrder=DESC&sortBy=uploadDate`,
-    {
-      next: {
-        revalidate: 60,
-      },
+  try {
+    const res = await fetch(
+      `${env.BACKEND_URL}/videos?channelId=${id}&limit=50&sortOrder=DESC&sortBy=uploadDate`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch videos: ${res.statusText}`);
     }
-  );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch videos");
+    const data = await res.json();
+    return videoResponseSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    throw new Error("Failed to fetch videos. Please try again later.");
   }
-
-  const data = await res.json();
-  return videoResponseSchema.parse(data);
 }
 
 export default async function ChannelDetail({

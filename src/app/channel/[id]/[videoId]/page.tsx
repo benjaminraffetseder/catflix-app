@@ -4,15 +4,27 @@ import { AspectRatio, Box, Container, Heading, Text } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every minute
 
 async function getVideo(id: string) {
-  const res = await fetch(`${env.BACKEND_URL}/videos/${id}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
+  try {
+    const res = await fetch(`${env.BACKEND_URL}/videos/${id}`, {
+      next: { revalidate: 60 },
+    });
 
-  const data = await res.json();
-  return videoDetailsSchema.parse(data);
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`Failed to fetch video: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return videoDetailsSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching video:", error);
+    throw new Error("Failed to fetch video. Please try again later.");
+  }
 }
 
 export default async function VideoPage({

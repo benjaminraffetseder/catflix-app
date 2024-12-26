@@ -2,7 +2,7 @@
 
 import { Error } from "@/components/ui/error";
 
-export default function ChannelError({
+export default function ErrorPage({
   reset,
 }: {
   error: Error & { digest?: string };
@@ -10,9 +10,9 @@ export default function ChannelError({
 }) {
   return (
     <Error.Root>
-      <Error.Title>Channel not available</Error.Title>
+      <Error.Title>Something went wrong!</Error.Title>
       <Error.Description>
-        We&apos;re having trouble loading this channel. Please try again later.
+        We&apos;re having trouble loading the content. Please try again later.
       </Error.Description>
       <Error.Actions>
         <Error.RetryButton onClick={reset} />

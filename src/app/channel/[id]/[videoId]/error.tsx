@@ -1,14 +1,22 @@
 "use client";
-import { Button, Container, Heading, Text, VStack } from "@chakra-ui/react";
 
-export default function Error() {
+import { Error } from "@/components/ui/error";
+
+export default function VideoError({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   return (
-    <Container maxW="container.xl" py={8}>
-      <VStack gap={4} align="center">
-        <Heading>Something went wrong</Heading>
-        <Text>We couldn&apos;t load the video. Please try again later.</Text>
-        <Button onClick={() => window.location.reload()}>Try Again</Button>
-      </VStack>
-    </Container>
+    <Error.Root>
+      <Error.Title>Video not available</Error.Title>
+      <Error.Description>
+        We&apos;re having trouble loading this video. Please try again later.
+      </Error.Description>
+      <Error.Actions>
+        <Error.RetryButton onClick={reset} />
+      </Error.Actions>
+    </Error.Root>
   );
 }

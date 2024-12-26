@@ -5,19 +5,27 @@ import { env } from "@/utils/env";
 import { Box, Container, Heading, Text } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every minute
 
 // Separate async function to fetch content
 async function getChannels(): Promise<ChannelResponse> {
-  const res = await fetch(`${env.BACKEND_URL}/channels`, {
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(`${env.BACKEND_URL}/channels`, {
+      next: { revalidate: 60 }, // Cache for 60 seconds
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch featured content");
+    if (!res.ok) {
+      throw new Error(`Failed to fetch featured content: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return channelResponseSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching channels:", error);
+    throw new Error(
+      "Failed to fetch featured content. Please try again later."
+    );
   }
-
-  const data = await res.json();
-  return channelResponseSchema.parse(data);
 }
 
 export default async function Home() {

@@ -45,18 +45,21 @@ export default async function Home() {
     <Box>
       <Hero>
         <Hero.Content>
-          <Hero.Title>Discover Adorable Cat Videos</Hero.Title>
+          <Hero.Title>CATFLIX</Hero.Title>
           <Hero.Description>
-            Select endless hours of content for your furry friends from{" "}
-            <Text fontWeight="bold" as="span" mx={1}>
-              {channels.total}
-            </Text>
-            channels and
-            <Text fontWeight="bold" as="span" mx={1}>
-              {videoCount}
-            </Text>
-            videos
+            The streaming platform for your cat.
           </Hero.Description>
+          <Hero.Subheading>
+            Select endless hours of content for your furry friends from{" "}
+            <Text fontWeight="bold" as="span">
+              {channels.total}
+            </Text>{" "}
+            channels and{" "}
+            <Text fontWeight="bold" as="span">
+              {videoCount}
+            </Text>{" "}
+            videos
+          </Hero.Subheading>
         </Hero.Content>
         <Hero.Actions />
       </Hero>

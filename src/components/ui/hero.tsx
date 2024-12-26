@@ -54,7 +54,12 @@ export const Hero = ({ children }: HeroProps) => {
 
 Hero.Title = function HeroTitle({ children }: { children: React.ReactNode }) {
   return (
-    <Heading as="h1" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="bold">
+    <Heading
+      as="h1"
+      fontSize={{ base: "2xl", md: "4xl" }}
+      fontWeight="bold"
+      color="primary.default"
+    >
       {children}
     </Heading>
   );
@@ -66,6 +71,22 @@ Hero.Description = function HeroDescription({
   children: React.ReactNode;
 }) {
   return <Text fontSize={{ base: "lg", md: "xl" }}>{children}</Text>;
+};
+
+Hero.Subheading = function HeroSubheading({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Text
+      maxW="prose"
+      fontSize={{ base: "sm", md: "md" }}
+      color="fg.default/80"
+    >
+      {children}
+    </Text>
+  );
 };
 
 Hero.Actions = function HeroActions() {

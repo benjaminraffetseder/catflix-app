@@ -27,7 +27,7 @@ export const Navbar = () => {
       {/* Top Navigation - Logo and Profile */}
       <Box
         as="nav"
-        position="fixed"
+        position="sticky"
         w="full"
         bg="bg.surface/80"
         backdropFilter="blur(5px)"

@@ -3,11 +3,11 @@ import { env } from "@/utils/env";
 import { AspectRatio, Box, Container, Heading, Text } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 async function getVideo(id: string) {
   const res = await fetch(`${env.BACKEND_URL}/videos/${id}`, {
-    next: {
-      revalidate: 60,
-    },
+    cache: "no-store",
   });
   if (!res.ok) return null;
 

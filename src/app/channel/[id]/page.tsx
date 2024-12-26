@@ -22,11 +22,11 @@ import { YoutubeIcon } from "lucide-react";
 import NextImage from "next/image";
 import { default as Link, default as NextLink } from "next/link";
 
+export const dynamic = "force-dynamic";
+
 async function getChannel(id: string): Promise<Channel> {
   const res = await fetch(`${env.BACKEND_URL}/channels/${id}`, {
-    next: {
-      revalidate: 60,
-    },
+    cache: "no-store",
   });
 
   if (!res.ok) {

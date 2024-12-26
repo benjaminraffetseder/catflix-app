@@ -19,29 +19,6 @@ import { PlayIcon } from "lucide-react";
 import NextImage from "next/image";
 import Link from "next/link";
 
-const featuredContent = [
-  {
-    title: "Cute Kittens Playing",
-    image: "https://images.unsplash.com/photo-1595433707802-6b2626ef1c91",
-    category: "Trending Now",
-  },
-  {
-    title: "Cats Being Funny",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006",
-    category: "Popular",
-  },
-  {
-    title: "Sleepy Cat Collection",
-    image: "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7",
-    category: "New Releases",
-  },
-  {
-    title: "Majestic Cats",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec",
-    category: "Must Watch",
-  },
-];
-
 // Separate async function to fetch content
 async function getChannels(): Promise<ChannelResponse> {
   const res = await fetch(`${env.BACKEND_URL}/channels`, {
@@ -102,6 +79,7 @@ export default async function Home() {
                   objectFit="cover"
                   transition="transform 0.3s ease"
                   _hover={{ transform: "scale(1.05)" }}
+                  alt={channel.name}
                   asChild
                 >
                   <NextImage

@@ -9,15 +9,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-
 interface VideoDetailProps {
   video: VideoDetails;
 }
 
 export function VideoDetail({ video }: VideoDetailProps) {
   return (
-    <Container maxW="container.xl" py={8}>
-      <AspectRatio ratio={16 / 9} mb={6} rounded="2xl" overflow="hidden">
+    <Container maxW="container.xl" py={8} pos="relative">
+      <AspectRatio
+        ratio={16 / 9}
+        mb={6}
+        rounded="2xl"
+        overflow="hidden"
+        zIndex={20}
+      >
         <iframe
           src={`https://www.youtube.com/embed/${video.youtubeId}`}
           title={video.title}
@@ -26,19 +31,29 @@ export function VideoDetail({ video }: VideoDetailProps) {
         />
       </AspectRatio>
 
-      <Box mb={6}>
+      <Box
+        as="section"
+        mb={6}
+        border="1px solid"
+        borderColor="border.surface"
+        w="fit-content"
+        p={4}
+        rounded="2xl"
+        zIndex={20}
+        pos="relative"
+      >
         <Heading as="h1" size="lg">
           {video.title}
         </Heading>
-        <HStack alignItems="baseline" gap={2}>
+        <HStack alignItems="baseline" gap={2} pb={2}>
           <Link
             asChild
             color="fg.muted"
             fontSize="sm"
-            mb={4}
             px="0"
-            variant="text"
             py="0"
+            height="auto"
+            variant="text"
             _hover={{
               textDecoration: "underline",
               color: "fg.default",
@@ -50,7 +65,7 @@ export function VideoDetail({ video }: VideoDetailProps) {
               {video.channel.name}
             </NextLink>
           </Link>
-          <Text color="gray.500" fontSize="xs" mb={2}>
+          <Text color="fg.muted" fontSize="xs">
             {new Date(video.uploadDate).toLocaleDateString()} •{" "}
             {Math.floor(video.length / 3600)}h{" "}
             {Math.floor((video.length % 3600) / 60)}m

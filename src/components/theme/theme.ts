@@ -338,6 +338,15 @@ const semanticTokens = defineSemanticTokens({
       },
       description: "Strong border color",
     },
+    "border.surface": {
+      value: {
+        _latte: "{colors.catppuccin.latte.surface0}",
+        _frappe: "{colors.catppuccin.frappe.surface0}",
+        _macchiato: "{colors.catppuccin.macchiato.surface0}",
+        _mocha: "{colors.catppuccin.mocha.surface0}",
+      },
+      description: "Surface border color",
+    },
 
     // Surface colors
     "surface.default": {

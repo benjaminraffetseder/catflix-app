@@ -1,3 +1,4 @@
+import { Footer } from "@/components/ui/footer";
 import { Navbar } from "@/components/ui/navbar";
 import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
@@ -21,10 +22,13 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" className={font.variable}>
       <head />
-      <body>
+      <body
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <Provider defaultTheme="macchiato" enableSystem={false}>
           <Navbar />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>

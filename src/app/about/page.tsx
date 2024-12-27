@@ -4,7 +4,6 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 
 import {
-  HoverCardArrow,
   HoverCardContent,
   HoverCardRoot,
   HoverCardTrigger,
@@ -35,8 +34,7 @@ export default function AboutPage() {
               Mochi
             </Text>
           </HoverCardTrigger>
-          <HoverCardContent>
-            <HoverCardArrow />
+          <HoverCardContent bg="bg.surface">
             <Image asChild alt="Mochi">
               <NextImage
                 src="/images/mochi.jpg"
@@ -49,7 +47,7 @@ export default function AboutPage() {
         </HoverCardRoot>
       </Text>
 
-      <Text>
+      <Text mb={4}>
         Seeing how much Mochi enjoys watching wildlife videos, I got inspired to
         create Catflix - a free streaming platform, just for cats!
       </Text>

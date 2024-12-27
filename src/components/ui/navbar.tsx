@@ -12,13 +12,14 @@ import { ColorModeButton } from "./color-mode";
 
 const MOBILE_NAV_ITEMS = [
   { name: "Home", Icon: HomeIcon, href: "/" },
-  { name: "Random", Icon: ClockIcon, href: "/random" },
   { name: "Channels", Icon: TvIcon, href: "/channels" },
   { name: "Videos", Icon: FilmIcon, href: "/videos" },
+  { name: "Random", Icon: ClockIcon, href: "/random" },
   { name: "About", Icon: InfoIcon, href: "/about" },
 ];
 
 const DESKTOP_NAV_ITEMS = [
+  { name: "Home", href: "/" },
   { name: "Videos", href: "/videos" },
   { name: "Channels", href: "/channels" },
   { name: "Random", href: "/random" },

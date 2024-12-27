@@ -79,11 +79,7 @@ Hero.Subheading = function HeroSubheading({
   children: React.ReactNode;
 }) {
   return (
-    <Text
-      maxW="prose"
-      fontSize={{ base: "sm", md: "md" }}
-      color="fg.default/80"
-    >
+    <Text maxW="prose" fontSize={{ base: "sm", md: "md" }}>
       {children}
     </Text>
   );

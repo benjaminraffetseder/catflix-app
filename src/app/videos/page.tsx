@@ -47,7 +47,7 @@ export default async function VideosPage({
             pos="sticky"
             top={{ base: 0, md: "75px" }}
             bg="bg.crust"
-            zIndex={{ base: "150", md: "auto" }}
+            zIndex={{ base: "150", md: "50" }}
             py={4}
             px={{ base: 4, md: 0 }}
           >

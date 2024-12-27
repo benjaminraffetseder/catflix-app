@@ -5,12 +5,12 @@ import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 60; // Revalidate every minute
+export const revalidate = 60;
 
 async function getChannels(): Promise<ChannelResponse> {
   try {
     const res = await fetch(`${env.BACKEND_URL}/channels`, {
-      next: { revalidate: 60 }, // Cache for 60 seconds
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

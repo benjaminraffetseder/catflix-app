@@ -1,27 +1,24 @@
+import { ChannelPagination } from "@/components/ui/channel-pagination";
+import { VideoGrid } from "@/components/ui/video-grid";
 import {
   Channel,
   channelSchema,
-  Video,
   VideoResponse,
   videoResponseSchema,
 } from "@/schemas/channel";
 import { env } from "@/utils/env";
 import {
-  Badge,
   Box,
   Container,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Image,
   Stack,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { YoutubeIcon } from "lucide-react";
 import NextImage from "next/image";
-import { default as Link, default as NextLink } from "next/link";
+import { default as Link } from "next/link";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // Revalidate every minute
@@ -44,10 +41,10 @@ async function getChannel(id: string): Promise<Channel> {
   }
 }
 
-async function getVideos(id: string): Promise<VideoResponse> {
+async function getVideos(id: string, page: number = 1): Promise<VideoResponse> {
   try {
     const res = await fetch(
-      `${env.BACKEND_URL}/videos?channelId=${id}&pageSize=12&sortOrder=DESC&sortBy=uploadDate`,
+      `${env.BACKEND_URL}/videos?channelId=${id}&pageSize=20&page=${page}&sortOrder=DESC&sortBy=uploadDate`,
       {
         next: { revalidate: 60 },
       }
@@ -67,12 +64,16 @@ async function getVideos(id: string): Promise<VideoResponse> {
 
 export default async function ChannelDetail({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const id = (await params).id;
+  const { page: pageParam } = await searchParams;
+  const page = parseInt(pageParam ?? "1", 10);
   const channel = await getChannel(id);
-  const videos = await getVideos(id);
+  const videoResponse = await getVideos(id, page);
 
   return (
     <Box>
@@ -114,84 +115,31 @@ export default async function ChannelDetail({
         </Container>
       </Box>
 
-      <Container maxW="container.xl" py={12}>
+      <Container maxW="container.xl" pos="relative" py={12}>
         <Stack gap={8}>
-          <Box>
-            <Heading size="lg" mb={6} color="fg.default">
-              Latest Videos
-            </Heading>
-            <Grid
-              templateColumns={{
-                base: "repeat(1, 1fr)",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-                lg: "repeat(4, 1fr)",
-              }}
-              gap={6}
+          <VStack gap="4">
+            <HStack
+              justify="space-between"
+              alignItems="center"
+              w="full"
+              pos="sticky"
+              top="75px"
+              bg="bg.crust"
+              zIndex="1"
+              py={4}
             >
-              {videos.data.map((video: Video) => (
-                <GridItem
-                  key={video.id}
-                  pos="relative"
-                  className="group"
-                  overflow="hidden"
-                >
-                  <NextLink href={`/channel/${video.channelId}/${video.id}`}>
-                    <Box
-                      borderRadius="lg"
-                      overflow="hidden"
-                      transition="transform 0.2s"
-                      bg="transparent"
-                    >
-                      <Box position="relative">
-                        <Image asChild alt={video.title}>
-                          <NextImage
-                            src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
-                            alt={video.title}
-                            width={400}
-                            height={225}
-                          />
-                        </Image>
-                        {video.length > 0 && (
-                          <Badge
-                            position="absolute"
-                            bottom={2}
-                            right={2}
-                            bg="bg.crust"
-                            color="fg.default"
-                            fontSize="xs"
-                            fontWeight="bold"
-                            px={2}
-                            py={1}
-                            rounded="md"
-                          >
-                            {Math.floor(video.length / 3600)}h{" "}
-                            {Math.floor((video.length % 3600) / 60)}m
-                          </Badge>
-                        )}
-                      </Box>
-                      <Box
-                        py={2}
-                        bg="transparent"
-                        w="full"
-                        transform="translateY(0)"
-                        transition="opacity 0.2s, transform 0.2s"
-                        animationTimingFunction="outQuad"
-                        _groupHover={{
-                          opacity: 1,
-                          transform: "translateY(-2px)",
-                        }}
-                      >
-                        <Text fontWeight="bold" fontSize="xs">
-                          {video.title}
-                        </Text>
-                      </Box>
-                    </Box>
-                  </NextLink>
-                </GridItem>
-              ))}
-            </Grid>
-          </Box>
+              <Heading size="lg" color="fg.default">
+                Latest Videos
+              </Heading>
+              <ChannelPagination
+                page={page}
+                total={videoResponse.total}
+                pageSize={videoResponse.pageSize}
+                channelId={id}
+              />
+            </HStack>
+            <VideoGrid videos={videoResponse.data} />
+          </VStack>
         </Stack>
       </Container>
     </Box>

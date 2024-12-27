@@ -9,6 +9,7 @@ import {
   createContext,
   usePaginationContext,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import * as React from "react";
 import {
   HiChevronLeft,
@@ -16,7 +17,6 @@ import {
   HiMiniEllipsisHorizontal,
 } from "react-icons/hi2";
 import { LinkButton } from "./link-button";
-
 interface ButtonVariantMap {
   current: ButtonProps["variant"];
   default: ButtonProps["variant"];
@@ -92,8 +92,13 @@ export const PaginationItem = React.forwardRef<
 
   if (getHref) {
     return (
-      <LinkButton href={getHref(props.value)} variant={variant} size={size}>
-        {props.value}
+      <LinkButton
+        href={getHref(props.value)}
+        variant={variant}
+        size={size}
+        asChild
+      >
+        <NextLink href={getHref(props.value)}>{props.value}</NextLink>
       </LinkButton>
     );
   }
@@ -116,12 +121,10 @@ export const PaginationPrevTrigger = React.forwardRef<
 
   if (getHref) {
     return (
-      <LinkButton
-        href={previousPage != null ? getHref(previousPage) : undefined}
-        variant={variantMap.default}
-        size={size}
-      >
-        <HiChevronLeft />
+      <LinkButton asChild variant={variantMap.default} size={size}>
+        <NextLink href={previousPage != null ? getHref(previousPage) : ""}>
+          <HiChevronLeft />
+        </NextLink>
       </LinkButton>
     );
   }
@@ -144,12 +147,10 @@ export const PaginationNextTrigger = React.forwardRef<
 
   if (getHref) {
     return (
-      <LinkButton
-        href={nextPage != null ? getHref(nextPage) : undefined}
-        variant={variantMap.default}
-        size={size}
-      >
-        <HiChevronRight />
+      <LinkButton variant={variantMap.default} size={size} asChild>
+        <NextLink href={nextPage != null ? getHref(nextPage) : ""}>
+          <HiChevronRight />
+        </NextLink>
       </LinkButton>
     );
   }

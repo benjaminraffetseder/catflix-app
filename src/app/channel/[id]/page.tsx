@@ -1,5 +1,5 @@
 import { ChannelPagination } from "@/components/ui/channel-pagination";
-import { VideoGrid } from "@/components/ui/video-grid";
+import { ContentGrid } from "@/components/ui/content-grid";
 import {
   Channel,
   channelSchema,
@@ -147,7 +147,11 @@ export default async function ChannelDetail({
             </Container>
           </Box>
           <Container maxW="7xl">
-            <VideoGrid videos={videoResponse.data} />
+            <ContentGrid.List
+              items={videoResponse.data}
+              columns={4}
+              variant="video"
+            />
           </Container>
         </VStack>
       </VStack>

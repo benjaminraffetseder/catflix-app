@@ -1,4 +1,4 @@
-import { ChannelGrid } from "@/components/ui/channel-grid";
+import { ContentGrid } from "@/components/ui/content-grid";
 import { channelResponseSchema, type ChannelResponse } from "@/schemas/channel";
 import { env } from "@/utils/env";
 import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
@@ -41,9 +41,13 @@ export default async function ChannelsPage() {
         </Box>
 
         <Suspense fallback={<div>Loading channels...</div>}>
-          <ChannelGrid.Root value="all-channels" title="All Channels">
-            <ChannelGrid.List channels={channelsResponse.data} columns={4} />
-          </ChannelGrid.Root>
+          <ContentGrid.Root value="all-channels" title="All Channels">
+            <ContentGrid.List
+              items={channelsResponse.data}
+              columns={4}
+              variant="channel"
+            />
+          </ContentGrid.Root>
         </Suspense>
       </VStack>
     </Container>

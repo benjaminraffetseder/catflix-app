@@ -1,4 +1,4 @@
-import { VideoGrid } from "@/components/ui/video-grid";
+import { ContentGrid } from "@/components/ui/content-grid";
 import { VideoPagination } from "@/components/ui/video-pagination";
 import { videoResponseSchema, type VideoResponse } from "@/schemas/channel";
 import { env } from "@/utils/env";
@@ -79,7 +79,11 @@ export default async function VideosPage({
             </Container>
           </Box>
           <Container maxW="7xl">
-            <VideoGrid videos={videoResponse.data} />
+            <ContentGrid.List
+              items={videoResponse.data}
+              columns={4}
+              variant="video"
+            />
           </Container>
         </VStack>
       </VStack>

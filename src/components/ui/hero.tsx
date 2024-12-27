@@ -1,5 +1,4 @@
 import {
-  Box,
   Link as ChakraLink,
   Container,
   Heading,
@@ -14,15 +13,15 @@ type HeroProps = {
 
 export const Hero = ({ children }: HeroProps) => {
   return (
-    <Box
+    <Container
       as="header"
       position="relative"
       pt={64}
       bgImage="url('https://images.unsplash.com/photo-1615796153287-98eacf0abb13')"
       bgSize="cover"
       bgPos="center"
-      roundedBottom={{ base: "4xl", md: "42px" }}
-      shadow="lg"
+      roundedBottom={{ base: "4xl", md: "48px" }}
+      shadow="xl"
       _before={{
         content: '""',
         position: "absolute",
@@ -48,7 +47,7 @@ export const Hero = ({ children }: HeroProps) => {
           {children}
         </Stack>
       </Container>
-    </Box>
+    </Container>
   );
 };
 

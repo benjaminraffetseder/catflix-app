@@ -1,6 +1,6 @@
 import { ChannelGrid } from "@/components/ui/channel-grid";
+import { FeaturedGrid } from "@/components/ui/featured-grid";
 import { Hero } from "@/components/ui/hero";
-import { VideoGrid } from "@/components/ui/video-grid";
 import {
   channelResponseSchema,
   videoResponseSchema,
@@ -8,7 +8,7 @@ import {
   type VideoResponse,
 } from "@/schemas/channel";
 import { env } from "@/utils/env";
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // Revalidate every minute
@@ -87,12 +87,9 @@ export default async function Home() {
         <Hero.Actions />
       </Hero>
       <Container maxW="container.xl" py={16}>
-        <Box mb={16}>
-          <Heading as="h2" size="lg" mb={8} color="fg.muted">
-            Featured Videos
-          </Heading>
-          <VideoGrid videos={featuredVideos.data} />
-        </Box>
+        <FeaturedGrid.Root value="featured" title="Featured Videos">
+          <FeaturedGrid.List videos={featuredVideos.data} columns={4} />
+        </FeaturedGrid.Root>
         <ChannelGrid.Root value="channels" title="Channels">
           <ChannelGrid.List channels={channels.data.slice(0, 4)} columns={4} />
           <ChannelGrid.List channels={channels.data.slice(4)} columns={5} />

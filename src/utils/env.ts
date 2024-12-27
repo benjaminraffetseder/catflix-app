@@ -3,7 +3,10 @@ import { z } from "zod";
 // Define schema for environment variables
 const envSchema = z.object({
   BACKEND_URL: z.string().url(),
-  ENABLE_ANALYTICS: z.boolean().optional(),
+  ENABLE_ANALYTICS: z
+    .union([z.literal("true"), z.literal("false")])
+    .transform((val) => val === "true")
+    .optional(),
   // Add more environment variables as needed
 });
 

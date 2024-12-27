@@ -1,5 +1,4 @@
-import { ChannelGrid } from "@/components/ui/channel-grid";
-import { FeaturedGrid } from "@/components/ui/featured-grid";
+import { ContentGrid } from "@/components/ui/content-grid";
 import { Hero } from "@/components/ui/hero";
 import {
   channelResponseSchema,
@@ -87,13 +86,25 @@ export default async function Home() {
         <Hero.Actions />
       </Hero>
       <Container maxW="container.xl" py={16}>
-        <FeaturedGrid.Root value="featured" title="Featured Videos">
-          <FeaturedGrid.List videos={featuredVideos.data} columns={4} />
-        </FeaturedGrid.Root>
-        <ChannelGrid.Root value="channels" title="Channels">
-          <ChannelGrid.List channels={channels.data.slice(0, 4)} columns={4} />
-          <ChannelGrid.List channels={channels.data.slice(4)} columns={5} />
-        </ChannelGrid.Root>
+        <ContentGrid.Root value="featured" title="Featured Videos">
+          <ContentGrid.List
+            items={featuredVideos.data}
+            columns={5}
+            variant="video"
+          />
+        </ContentGrid.Root>
+        <ContentGrid.Root value="channels" title="Channels">
+          <ContentGrid.List
+            items={channels.data.slice(0, 4)}
+            columns={4}
+            variant="channel"
+          />
+          <ContentGrid.List
+            items={channels.data.slice(4)}
+            columns={5}
+            variant="channel"
+          />
+        </ContentGrid.Root>
       </Container>
     </Box>
   );

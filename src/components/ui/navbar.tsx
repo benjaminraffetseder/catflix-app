@@ -12,16 +12,16 @@ import { ColorModeButton } from "./color-mode";
 
 const MOBILE_NAV_ITEMS = [
   { name: "Home", Icon: HomeIcon, href: "/" },
-  { name: "New", Icon: ClockIcon, href: "/new" },
-  { name: "Movies", Icon: FilmIcon, href: "/movies" },
+  { name: "Random", Icon: ClockIcon, href: "/random" },
   { name: "Channels", Icon: TvIcon, href: "/channels" },
+  { name: "Videos", Icon: FilmIcon, href: "/videos" },
   { name: "About", Icon: InfoIcon, href: "/about" },
 ];
 
 const DESKTOP_NAV_ITEMS = [
-  { name: "Movies", href: "/movies" },
+  { name: "Videos", href: "/videos" },
   { name: "Channels", href: "/channels" },
-  { name: "New", href: "/new" },
+  { name: "Random", href: "/random" },
   { name: "About", href: "/about" },
 ];
 

@@ -1,8 +1,14 @@
 import { ChannelGrid } from "@/components/ui/channel-grid";
 import { Hero } from "@/components/ui/hero";
-import { channelResponseSchema, type ChannelResponse } from "@/schemas/channel";
+import { VideoGrid } from "@/components/ui/video-grid";
+import {
+  channelResponseSchema,
+  videoResponseSchema,
+  type ChannelResponse,
+  type VideoResponse,
+} from "@/schemas/channel";
 import { env } from "@/utils/env";
-import { Box, Container, Text } from "@chakra-ui/react";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // Revalidate every minute
@@ -28,8 +34,30 @@ async function getChannels(): Promise<ChannelResponse> {
   }
 }
 
+// Separate async function to fetch featured videos
+async function getFeaturedVideos(): Promise<VideoResponse> {
+  try {
+    const res = await fetch(`${env.BACKEND_URL}/videos`, {
+      next: { revalidate: 60 }, // Cache for 60 seconds
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch featured videos: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return videoResponseSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching featured videos:", error);
+    throw new Error("Failed to fetch featured videos. Please try again later.");
+  }
+}
+
 export default async function Home() {
-  const channels = await getChannels();
+  const [channels, featuredVideos] = await Promise.all([
+    getChannels(),
+    getFeaturedVideos(),
+  ]);
 
   const videoCount = channels.data.reduce(
     (acc, channel) => acc + channel.videoCount,
@@ -59,6 +87,12 @@ export default async function Home() {
         <Hero.Actions />
       </Hero>
       <Container maxW="container.xl" py={16}>
+        <Box mb={16}>
+          <Heading as="h2" size="lg" mb={8} color="fg.muted">
+            Featured Videos
+          </Heading>
+          <VideoGrid videos={featuredVideos.data} />
+        </Box>
         <ChannelGrid.Root value="channels" title="Channels">
           <ChannelGrid.List channels={channels.data.slice(0, 4)} columns={4} />
           <ChannelGrid.List channels={channels.data.slice(4)} columns={5} />

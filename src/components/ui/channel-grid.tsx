@@ -4,12 +4,11 @@ import {
   Box,
   Heading,
   HStack,
-  IconButton,
   Image,
   SimpleGrid,
+  Text,
   VStack,
 } from "@chakra-ui/react";
-import { PlayIcon } from "lucide-react";
 import NextImage from "next/image";
 import Link from "next/link";
 
@@ -99,10 +98,7 @@ const Item = ({ channel }: ItemProps) => {
           gradientTo="bg.canvas"
           gap={2}
           alignItems="flex-start"
-        >
-          <Badge size="sm">{channel.videoCount} videos</Badge>
-          <Badge size="md">{channel.name}</Badge>
-        </VStack>
+        ></VStack>
         <HStack
           position="absolute"
           top={0}
@@ -114,10 +110,13 @@ const Item = ({ channel }: ItemProps) => {
           gradientTo="bg.canvas"
           justifyContent="flex-end"
         >
-          <IconButton aria-label="Play" variant="solid" size="sm">
-            <PlayIcon size={16} />
-          </IconButton>
+          <Badge size="xs">{channel.videoCount} Videos</Badge>
         </HStack>
+      </Box>
+      <Box px={5} py={2} textAlign="center">
+        <Text fontSize="xs" color="fg.muted">
+          {channel.name}
+        </Text>
       </Box>
     </Link>
   );

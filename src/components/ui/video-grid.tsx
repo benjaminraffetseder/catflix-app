@@ -1,5 +1,3 @@
-"use client";
-
 import { Video } from "@/schemas/channel";
 import { Badge, Box, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
@@ -40,8 +38,8 @@ export function VideoGrid({ videos }: VideoGridProps) {
                   <NextImage
                     src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
                     alt={video.title}
-                    width={400}
-                    height={225}
+                    width={480}
+                    height={270}
                   />
                 </Image>
                 {video.length > 0 && (
@@ -74,7 +72,7 @@ export function VideoGrid({ videos }: VideoGridProps) {
                   transform: "translateY(-2px)",
                 }}
               >
-                <Text fontWeight="bold" fontSize="xs">
+                <Text fontSize="xs" color="fg.muted">
                   {video.title}
                 </Text>
               </Box>

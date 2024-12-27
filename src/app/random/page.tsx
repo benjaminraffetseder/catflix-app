@@ -4,12 +4,12 @@ import { env } from "@/utils/env";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 60; // Revalidate every minute
+export const revalidate = 0; // Don't cache this page
 
-async function getVideo(id: string) {
+async function getRandomVideo() {
   try {
-    const res = await fetch(`${env.BACKEND_URL}/videos/${id}`, {
-      next: { revalidate: 60 },
+    const res = await fetch(`${env.BACKEND_URL}/videos/random`, {
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -22,18 +22,13 @@ async function getVideo(id: string) {
     const data = await res.json();
     return videoDetailsSchema.parse(data);
   } catch (error) {
-    console.error("Error fetching video:", error);
+    console.error("Error fetching random video:", error);
     throw new Error("Failed to fetch video. Please try again later.");
   }
 }
 
-export default async function VideoPage({
-  params,
-}: {
-  params: Promise<{ videoId: string }>;
-}) {
-  const videoId = (await params).videoId;
-  const video = await getVideo(videoId);
+export default async function RandomVideoPage() {
+  const video = await getRandomVideo();
 
   if (!video) {
     notFound();

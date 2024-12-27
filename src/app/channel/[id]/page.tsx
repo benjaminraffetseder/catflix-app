@@ -44,7 +44,7 @@ async function getChannel(id: string): Promise<Channel> {
 async function getVideos(id: string, page: number = 1): Promise<VideoResponse> {
   try {
     const res = await fetch(
-      `${env.BACKEND_URL}/videos?channelId=${id}&pageSize=20&page=${page}&sortOrder=DESC&sortBy=uploadDate`,
+      `${env.BACKEND_URL}/videos?channelId=${id}&pageSize=12&page=${page}&sortOrder=DESC&sortBy=uploadDate`,
       {
         next: { revalidate: 60 },
       }

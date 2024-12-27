@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { ClockIcon, FilmIcon, HomeIcon, InfoIcon, TvIcon } from "lucide-react";
 import NextLink from "next/link";
-import { Button } from "./button";
 import { ColorModeButton } from "./color-mode";
 
 const MOBILE_NAV_ITEMS = [
@@ -19,7 +18,12 @@ const MOBILE_NAV_ITEMS = [
   { name: "About", Icon: InfoIcon, href: "/about" },
 ];
 
-const DESKTOP_NAV_ITEMS = ["Movies", "Channels", "New", "About"];
+const DESKTOP_NAV_ITEMS = [
+  { name: "Movies", href: "/movies" },
+  { name: "Channels", href: "/channels" },
+  { name: "New", href: "/new" },
+  { name: "About", href: "/about" },
+];
 
 export const Navbar = () => {
   return (
@@ -57,20 +61,24 @@ export const Navbar = () => {
             {/* Desktop Navigation */}
             <HStack gap={6} display={{ base: "none", md: "flex" }}>
               {DESKTOP_NAV_ITEMS.map((item) => (
-                <Button
-                  key={item}
+                <ChakraLink
+                  asChild
+                  key={item.name}
                   variant="ghost"
                   color="brand.primary.default"
+                  fontSize="sm"
+                  fontWeight="medium"
                   _hover={{
                     color: "primary.default",
                     bg: "bg.overlay2/30",
                   }}
                   transitionTimingFunction="outQuad"
                   transitionDuration="400ms"
-                  size="sm"
+                  px={3}
+                  py={2}
                 >
-                  {item}
-                </Button>
+                  <NextLink href={item.href}>{item.name}</NextLink>
+                </ChakraLink>
               ))}
             </HStack>
 

@@ -20,6 +20,7 @@ export const videoSchema = z.object({
   youtubeId: z.string(),
   channelId: z.string().uuid(),
   createdAt: z.string().datetime(),
+  length: z.number().int().nonnegative(),
 });
 
 // Schema for video details page
@@ -33,6 +34,10 @@ export const videoDetailsSchema = z.object({
   category: z.object({
     id: z.string().uuid(),
     title: z.string(),
+  }),
+  channel: z.object({
+    id: z.string().uuid(),
+    name: z.string(),
   }),
 });
 

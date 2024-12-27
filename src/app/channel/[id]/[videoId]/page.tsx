@@ -1,6 +1,15 @@
 import { videoDetailsSchema } from "@/schemas/channel";
 import { env } from "@/utils/env";
-import { AspectRatio, Box, Container, Heading, Text } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Container,
+  Heading,
+  HStack,
+  Link,
+  Text,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -51,18 +60,44 @@ export default async function VideoPage({
       </AspectRatio>
 
       <Box mb={6}>
-        <Heading as="h1" size="lg" mb={2}>
+        <Heading as="h1" size="lg">
           {video.title}
         </Heading>
-        <Text color="gray.500" fontSize="sm" mb={2}>
-          {new Date(video.uploadDate).toLocaleDateString()} •{" "}
-          {Math.floor(video.length / 3600)}h{" "}
-          {Math.floor((video.length % 3600) / 60)}m
+        <HStack alignItems="baseline" gap={2}>
+          <Link
+            asChild
+            color="fg.muted"
+            fontSize="sm"
+            mb={4}
+            px="0"
+            variant="text"
+            py="0"
+            _hover={{
+              textDecoration: "underline",
+              color: "fg.default",
+              transform: "scale(1)",
+              bg: "transparent",
+            }}
+          >
+            <NextLink href={`/channel/${video.channel.id}`}>
+              {video.channel.name}
+            </NextLink>
+          </Link>
+          <Text color="gray.500" fontSize="xs" mb={2}>
+            {new Date(video.uploadDate).toLocaleDateString()} •{" "}
+            {Math.floor(video.length / 3600)}h{" "}
+            {Math.floor((video.length % 3600) / 60)}m
+          </Text>
+        </HStack>
+        <Text
+          whiteSpace="pre-wrap"
+          fontSize="xs"
+          color="fg.muted"
+          maxW="600px"
+          w="full"
+        >
+          {video.description}
         </Text>
-        <Text color="blue.500" fontSize="sm" mb={4}>
-          {video.category.title}
-        </Text>
-        <Text whiteSpace="pre-wrap">{video.description}</Text>
       </Box>
     </Container>
   );

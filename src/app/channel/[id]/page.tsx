@@ -7,6 +7,7 @@ import {
 } from "@/schemas/channel";
 import { env } from "@/utils/env";
 import {
+  Badge,
   Box,
   Container,
   Grid,
@@ -46,7 +47,7 @@ async function getChannel(id: string): Promise<Channel> {
 async function getVideos(id: string): Promise<VideoResponse> {
   try {
     const res = await fetch(
-      `${env.BACKEND_URL}/videos?channelId=${id}&limit=50&sortOrder=DESC&sortBy=uploadDate`,
+      `${env.BACKEND_URL}/videos?channelId=${id}&pageSize=12&sortOrder=DESC&sortBy=uploadDate`,
       {
         next: { revalidate: 60 },
       }
@@ -140,11 +141,7 @@ export default async function ChannelDetail({
                       borderRadius="lg"
                       overflow="hidden"
                       transition="transform 0.2s"
-                      _hover={{
-                        shadow: "xl",
-                        bg: "bg.surface",
-                      }}
-                      bg="bg.surface"
+                      bg="transparent"
                     >
                       <Box position="relative">
                         <Image asChild alt={video.title}>
@@ -155,28 +152,37 @@ export default async function ChannelDetail({
                             height={225}
                           />
                         </Image>
+                        {video.length > 0 && (
+                          <Badge
+                            position="absolute"
+                            bottom={2}
+                            right={2}
+                            bg="bg.crust"
+                            color="fg.default"
+                            fontSize="xs"
+                            fontWeight="bold"
+                            px={2}
+                            py={1}
+                            rounded="md"
+                          >
+                            {Math.floor(video.length / 3600)}h{" "}
+                            {Math.floor((video.length % 3600) / 60)}m
+                          </Badge>
+                        )}
                       </Box>
                       <Box
-                        pos="absolute"
-                        bottom={0}
-                        px={4}
                         py={2}
-                        bg="bg.canvas"
+                        bg="transparent"
                         w="full"
-                        borderTop="1px solid"
-                        borderColor="surface.strong/40"
-                        borderTopRadius="xl"
-                        borderBottomRadius="md"
-                        opacity={0}
-                        transform="translateY(100%)"
+                        transform="translateY(0)"
                         transition="opacity 0.2s, transform 0.2s"
                         animationTimingFunction="outQuad"
                         _groupHover={{
                           opacity: 1,
-                          transform: "translateY(0)",
+                          transform: "translateY(-2px)",
                         }}
                       >
-                        <Text fontWeight="bold" fontSize="sm" mb={2}>
+                        <Text fontWeight="bold" fontSize="xs">
                           {video.title}
                         </Text>
                       </Box>

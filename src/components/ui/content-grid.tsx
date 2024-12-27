@@ -53,7 +53,7 @@ const Root = ({ children, value, title }: RootProps) => {
             {title}
           </Heading>
         </AccordionItemTrigger>
-        <AccordionItemContent w="full">
+        <AccordionItemContent w="full" pt={10}>
           <VStack gap={8}>{children}</VStack>
         </AccordionItemContent>
       </AccordionItem>

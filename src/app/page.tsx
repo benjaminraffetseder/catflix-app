@@ -7,7 +7,8 @@ import {
   type VideoResponse,
 } from "@/schemas/channel";
 import { env } from "@/utils/env";
-import { Box, Container, Text } from "@chakra-ui/react";
+import { Box, Container, HStack, Separator, Text } from "@chakra-ui/react";
+import { CatIcon } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60; // Revalidate every minute
@@ -36,7 +37,7 @@ async function getChannels(): Promise<ChannelResponse> {
 // Separate async function to fetch featured videos
 async function getFeaturedVideos(): Promise<VideoResponse> {
   try {
-    const res = await fetch(`${env.BACKEND_URL}/videos`, {
+    const res = await fetch(`${env.BACKEND_URL}/videos?pageSize=15`, {
       next: { revalidate: 60 }, // Cache for 60 seconds
     });
 
@@ -93,6 +94,11 @@ export default async function Home() {
             variant="video"
           />
         </ContentGrid.Root>
+        <HStack my={8} justify="center" align="center" color="border.surface">
+          <Separator borderColor="border.surface" />
+          <CatIcon size={48} />
+          <Separator borderColor="border.surface" />
+        </HStack>
         <ContentGrid.Root value="channels" title="Channels">
           <ContentGrid.List
             items={channels.data.slice(0, 4)}

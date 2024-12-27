@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐱 Catflix
 
-## Getting Started
+A streaming platform designed specifically for cats! Catflix provides a curated collection of long-form videos that cats love to watch.
 
-First, run the development server:
+## ✨ Features
+
+- 🎥 Curated collection of cat-friendly videos
+- 🎨 Beautiful, modern UI with Chakra UI components
+- 🌈 Multiple theme options (Catnip Cream, Midnight Meow, Cozy Cave, Panther's Purr)
+- 📱 Fully responsive design
+- 🎯 Random video feature for quick entertainment
+- 📺 Organized channels and video categories
+- ⚡ Built with Next.js 15 and React 19
+
+## 🚀 Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/)
+- **UI Library:** [Chakra UI v3](https://chakra-ui.com/)
+- **Styling:** [@emotion/react](https://emotion.sh/docs/introduction)
+- **Icons:** [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
+- **Theme Switching:** [next-themes](https://github.com/pacocoursey/next-themes)
+- **Type Safety:** [TypeScript](https://www.typescriptlang.org/)
+- **Schema Validation:** [Zod](https://zod.dev/)
+
+## 🛠️ Getting Started
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone https://github.com/yourusername/catflix-app.git
+cd catflix-app
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Create a `.env.local` file in the root directory with the following variables:
+
+```env
+BACKEND_URL=your_backend_url
+ENABLE_ANALYTICS=false
+```
+
+4. Start the development server:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎨 Theme System
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Catflix uses a custom theme system based on the [Catppuccin](https://github.com/catppuccin/catppuccin) color palette, offering four beautiful themes:
 
-## Learn More
+- 🍦 Catnip Cream (Latte)
+- 🌙 Midnight Meow (Frappe)
+- ☕ Cozy Cave (Macchiato)
+- 🐈‍⬛ Panther's Purr (Mocha)
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👋 About
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Created with ♥️ by me, inspired by my cat's love for wildlife videos. Feel free to contribute or report issues!

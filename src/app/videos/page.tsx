@@ -62,10 +62,10 @@ export default async function VideosPage({
                 gap={4}
               >
                 <Box>
-                  <Heading size="2xl" mb={2}>
+                  <Heading size={{ base: "xl", md: "2xl" }} mb={2}>
                     Videos
                   </Heading>
-                  <Text color="fg.muted">
+                  <Text color="fg.muted" fontSize={{ base: "sm", md: "md" }}>
                     Browse through {videoResponse.total} amazing videos for your
                     cat
                   </Text>

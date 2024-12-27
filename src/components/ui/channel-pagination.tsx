@@ -34,6 +34,7 @@ export function ChannelPagination({
         count={total}
         pageSize={pageSize}
         getHref={(page) => `/channel/${channelId}?page=${page}`}
+        size="xs"
       >
         <HStack gap={2}>
           <PaginationPrevTrigger />

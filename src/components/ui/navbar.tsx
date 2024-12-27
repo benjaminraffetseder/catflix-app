@@ -50,11 +50,13 @@ export const Navbar = () => {
               color="brand.primary"
               letterSpacing="tight"
               textTransform="uppercase"
+              bg="bg.crust"
               _hover={{
                 color: "accent.red",
                 bg: "whiteAlpha.200",
               }}
               transition="all 0.2s ease-in-out"
+              overflow="hidden"
             >
               <NextLink href="/">Catflix</NextLink>
             </ChakraLink>

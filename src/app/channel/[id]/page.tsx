@@ -14,14 +14,15 @@ import {
   HStack,
   Image,
   Stack,
+  Text,
   VStack,
 } from "@chakra-ui/react";
-import { YoutubeIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import NextImage from "next/image";
 import { default as Link } from "next/link";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 60; // Revalidate every minute
+export const revalidate = 60;
 
 async function getChannel(id: string): Promise<Channel> {
   try {
@@ -76,72 +77,80 @@ export default async function ChannelDetail({
   const videoResponse = await getVideos(id, page);
 
   return (
-    <Box>
-      <Box
-        as="header"
-        bg="bg.surface"
-        borderBottom="1px solid"
-        borderColor="surface.strong/40"
-      >
-        <Container maxW="container.xl" py={4}>
-          <HStack gap={4}>
-            <Image
-              asChild
-              rounded="lg"
-              overflow="hidden"
-              w="64px"
-              h="64px"
-              alt={channel.name}
-            >
-              <NextImage
-                src={channel.thumbnailUrl}
-                alt={channel.name}
-                width={64}
-                height={64}
-              />
-            </Image>
-            <VStack flex={1} align="flex-start" gap={1}>
-              <Heading size="xl" color="primary.default" fontWeight="black">
-                {channel.name}
-              </Heading>
-              <Link
-                href={`https://www.youtube.com/channel/${channel.youtubeChannelId}`}
-                target="_blank"
+    <Box as="section" py={{ base: 8, md: 12 }}>
+      <VStack gap={8} align="stretch">
+        <VStack gap="4">
+          <Box
+            gap={{ base: 4, md: 0 }}
+            w="full"
+            pos="sticky"
+            top={{ base: 0, md: "75px" }}
+            bg="bg.crust"
+            zIndex={{ base: "150", md: "50" }}
+            py={4}
+            px={{ base: 4, md: 0 }}
+          >
+            <Container maxW="7xl">
+              <Stack
+                justifyContent="space-between"
+                direction={{ base: "column", md: "row" }}
+                alignItems={{
+                  base: "stretch",
+                  md: "end",
+                }}
+                gap={4}
               >
-                <YoutubeIcon />
-              </Link>
-            </VStack>
-          </HStack>
-        </Container>
-      </Box>
-
-      <Container maxW="container.xl" pos="relative" py={12}>
-        <Stack gap={8}>
-          <VStack gap="4">
-            <HStack
-              justify="space-between"
-              alignItems="center"
-              w="full"
-              pos="sticky"
-              top="75px"
-              bg="bg.crust"
-              zIndex="1"
-              py={4}
-            >
-              <Heading size="lg" color="fg.default">
-                Latest Videos
-              </Heading>
-              <ChannelPagination
-                page={page}
-                total={videoResponse.total}
-                pageSize={videoResponse.pageSize}
-                channelId={id}
-              />
-            </HStack>
+                <HStack gap={4} align="start">
+                  <Image
+                    asChild
+                    hidden={!channel.thumbnailUrl}
+                    display={{ base: "none", md: "block" }}
+                    rounded="lg"
+                    overflow="hidden"
+                    w="64px"
+                    h="64px"
+                    alt={channel.name}
+                  >
+                    <NextImage
+                      src={channel.thumbnailUrl}
+                      alt={channel.name}
+                      width={64}
+                      height={64}
+                    />
+                  </Image>
+                  <VStack align="flex-start" gap={1}>
+                    <Link
+                      href={`https://www.youtube.com/channel/${channel.youtubeChannelId}`}
+                      target="_blank"
+                    >
+                      <HStack gap={1} alignItems={"baseline"}>
+                        <Heading size={{ base: "xl", md: "2xl" }}>
+                          {channel.name}
+                        </Heading>
+                        <Box transform="translateY(-8px)">
+                          <ExternalLinkIcon size={12} />
+                        </Box>
+                      </HStack>
+                    </Link>
+                    <Text color="fg.muted" fontSize={{ base: "sm", md: "md" }}>
+                      {channel.videoCount} videos
+                    </Text>
+                  </VStack>
+                </HStack>
+                <ChannelPagination
+                  page={page}
+                  total={videoResponse.total}
+                  pageSize={videoResponse.pageSize}
+                  channelId={id}
+                />
+              </Stack>
+            </Container>
+          </Box>
+          <Container maxW="7xl">
             <VideoGrid videos={videoResponse.data} />
-          </VStack>
-        </Stack>
-      </Container>
+          </Container>
+        </VStack>
+      </VStack>
     </Box>
   );
 }

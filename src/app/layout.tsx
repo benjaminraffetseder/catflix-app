@@ -1,6 +1,7 @@
 import { Footer } from "@/components/ui/footer";
 import { Navbar } from "@/components/ui/navbar";
 import { Provider } from "@/components/ui/provider";
+import { env } from "@/utils/env";
 import type { Metadata } from "next";
 import { Funnel_Sans } from "next/font/google";
 import Script from "next/script";
@@ -32,7 +33,7 @@ export default function RootLayout({
           <Footer />
         </Provider>
       </body>
-      {process.env.NODE_ENV === "production" && (
+      {env.ENABLE_ANALYTICS && (
         <Script
           defer
           src="https://analytics.lumi-tools.com/script.js"

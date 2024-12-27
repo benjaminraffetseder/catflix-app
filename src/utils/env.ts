@@ -3,6 +3,7 @@ import { z } from "zod";
 // Define schema for environment variables
 const envSchema = z.object({
   BACKEND_URL: z.string().url(),
+  ENABLE_ANALYTICS: z.boolean().optional(),
   // Add more environment variables as needed
 });
 
@@ -15,6 +16,7 @@ function validateEnv(): EnvSchema {
     // In Next.js, we can access env variables through process.env
     const env = envSchema.parse({
       BACKEND_URL: process.env.BACKEND_URL,
+      ENABLE_ANALYTICS: process.env.ENABLE_ANALYTICS,
       // Add more environment variables as needed
     });
 
